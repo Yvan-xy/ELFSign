@@ -1,0 +1,2 @@
+/bin/ar qc libsource.a  CMakeFiles/source.dir/util/err.c.o CMakeFiles/source.dir/util/log.c.o CMakeFiles/source.dir/test/signtest.c.o
+/bin/ranlib libsource.a

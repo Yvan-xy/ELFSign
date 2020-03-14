@@ -1,0 +1,6 @@
+/home/code/solo/rubbish/ELFsign/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/code/solo/rubbish/ELFsign/cmake-build-debug/CMakeFiles/out.dir
+/home/code/solo/rubbish/ELFsign/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/code/solo/rubbish/ELFsign/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir
+/home/code/solo/rubbish/ELFsign/cmake-build-debug/src/CMakeFiles/source.dir
+/home/code/solo/rubbish/ELFsign/cmake-build-debug/src/CMakeFiles/edit_cache.dir

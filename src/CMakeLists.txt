@@ -1,0 +1,6 @@
+message ("current -> ${CMAKE_CURRENT_SOURCE_DIR}")
+aux_source_directory (${CMAKE_CURRENT_SOURCE_DIR}/util DIR_LIB_SRCS_UTIL)
+aux_source_directory (${CMAKE_CURRENT_SOURCE_DIR}/test DIR_LIB_SRCS_TEST)
+add_library (source ${DIR_LIB_SRCS_UTIL} ${DIR_LIB_SRCS_TEST})
+message ("util -> ${DIR_LIB_SRCS_UTIL}")
+message ("test -> ${DIR_LIB_SRCS_TEST}")
