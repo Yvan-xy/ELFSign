@@ -13,8 +13,8 @@ link_libraries (ssl crypto)
 
 # Set marco value
 set (KEY_LENGTH 2048)
-set (PUB_KEY_FILE "\"./pubkey.pem\"")
-set (PRI_KEY_FILE "\"./prikey.pem\"")
+set (PUB_KEY_FILE "\"./pem/pubkey.pem\"")
+set (PRI_KEY_FILE "\"./pem/prikey.pem\"")
 
 configure_file (
     "${PROJECT_INCLUDE_DIR}/config.h.in"

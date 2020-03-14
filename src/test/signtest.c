@@ -6,14 +6,14 @@ void signTester() {
 
     log_msg("-------------------");
     // Set public key path
-    SetPublicKeyPath("./pubkey.pem");
+    SetPublicKeyPath("./pem/pubkey.pem");
     char *pubpath = GetPublicKeyPath();
     log_msg("Public key path is %s", pubpath);
 
     // Set private key path
     log_msg("\n-------------------");
-    SetPrivateKeyPath("./prikey.pem");
-    char *privpath = GetPrivateKeyPath("./prikey.pem");
+    SetPrivateKeyPath("./pem/prikey.pem");
+    char *privpath = GetPrivateKeyPath("./pem/prikey.pem");
     log_msg("Private key path is %s", privpath);
 
     // Read public key
