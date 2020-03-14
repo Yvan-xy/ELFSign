@@ -62,6 +62,8 @@ void FileWrite(FILE *fd, char *contain) {
 
 void SetPublicKeyPath(const char *path) {
     unsigned long len = strlen(path);
+    if (READ_PUB_KEY_PATH != NULL)
+        free(READ_PUB_KEY_PATH);
     READ_PUB_KEY_PATH = (char *) malloc(len);
     if (READ_PUB_KEY_PATH == NULL)
         err_msg("Set public key path failed");
@@ -70,6 +72,8 @@ void SetPublicKeyPath(const char *path) {
 
 void SetPrivateKeyPath(const char *path) {
     unsigned long len = strlen(path);
+    if (READ_PRIV_KEY_PATH != NULL)
+        free(READ_PRIV_KEY_PATH);
     READ_PRIV_KEY_PATH = (char *) malloc(len);
     if (READ_PRIV_KEY_PATH == NULL)
         err_msg("Set private key path failed");
@@ -149,30 +153,6 @@ int RSACheckSign(char *contain, unsigned char *sign, int signLen, RSA *pub) {
                       signLen,
                       pub);//==1
 }
-
-char *Base64Encode(const unsigned char *input, int length) {
-    BIO *bmem, *b64;
-    BUF_MEM *bptr;
-
-    b64 = BIO_new(BIO_f_base64());
-    bmem = BIO_new(BIO_s_mem());
-    b64 = BIO_push(b64, bmem);
-    BIO_write(b64, input, length);
-    BIO_flush(b64);
-    BIO_get_mem_ptr(b64, &bptr);
-
-    char *buff = (char *) malloc(bptr->length + 1);
-    memcpy(buff, bptr->data, bptr->length);
-    buff[bptr->length] = 0;
-
-    BIO_free_all(b64);
-    log_msg("Base 64 len is %d", strlen(buff));
-
-    return buff;
-}
-
-
-
 
 
 

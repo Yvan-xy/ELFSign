@@ -9,8 +9,8 @@
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
 #include <openssl/sha.h>
-#include <stdio.h>
 #include <string.h>
+#include <math.h>
 
 // ---- rsa非对称加解密 ---- //
 #define false 0
@@ -41,5 +41,7 @@ int GetSign(unsigned char *hash, unsigned char *sign, RSA *pri);
 int RSACheckSign(char *contain, unsigned char *sign, int signLen, RSA *pub);
 
 char *Base64Encode(const unsigned char *input, int length);
+
+char *Base64Decode(const char *input, int length);
 
 #endif
