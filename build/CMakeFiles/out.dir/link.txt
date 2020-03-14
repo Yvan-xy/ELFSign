@@ -1,1 +1,0 @@
-/bin/cc   -rdynamic CMakeFiles/out.dir/src/main.c.o CMakeFiles/out.dir/src/sign.c.o  -o out -lssl -lcrypto src/libsource.a -lssl -lcrypto 
