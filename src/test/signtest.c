@@ -47,7 +47,7 @@ void signTester() {
     log_msg("\n\n-------------------");
     unsigned char sign[10240];
     int signLen = GetSign(digest, sign, pri);
-    for (int i=0;i<signLen;i++)
+    for (int i = 0; i < signLen; i++)
         printf("%p ", sign[i]);
 
     FILE *signfd = fopen("sign.txt", "w");
@@ -62,10 +62,18 @@ void signTester() {
     log_msg("Base64 len is %d", flen);
     int unflen;
     unsigned char *base64decode = unbase64(base64sign, flen, &unflen);
-    for (int i=0;i<signLen;i++)
+    for (int i = 0; i < signLen; i++)
         printf("%p ", base64decode[i]);
     log_msg("\nBase decode len is %d", unflen);
-    // Test
+
+    // Test RSACheckSign
+    int check = RSACheckSign(msg, sign, signLen, pub);
+    if (check == 1)
+        log_msg("Check pass!");
+    unsigned const char *fakeMsg = "Fuck you";
+    check = RSACheckSign(fakeMsg, sign, signLen, pub);
+    if (check == 0)
+        log_msg("Not pass!");
 }
 
 
