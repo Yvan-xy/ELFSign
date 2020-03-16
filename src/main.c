@@ -2,6 +2,7 @@
 #include <test.h>
 
 int main() {
-    signTester();
+//    signTester();
+    elf64Tester();
     return 0;
 }

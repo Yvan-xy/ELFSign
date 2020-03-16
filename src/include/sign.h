@@ -11,10 +11,9 @@
 #include <openssl/sha.h>
 #include <string.h>
 #include <math.h>
+#include <stdbool.h>
 
 // ---- rsa非对称加解密 ---- //
-#define false 0
-#define true 1
 
 
 char *READ_PUB_KEY_PATH;
