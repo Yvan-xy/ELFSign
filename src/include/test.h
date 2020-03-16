@@ -7,6 +7,7 @@
 
 void signTester();
 
-void elf64Tester();
+void elf64BaseTester();
 
+void sign64Tester();
 #endif //ELFSIGN_TEST_H

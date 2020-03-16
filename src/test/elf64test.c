@@ -6,8 +6,8 @@
 #include <assert.h>
 
 
-void elf64Tester() {
-    log_msg("\n---------- ELF TEST ----------");
+void elf64BaseTester() {
+    log_msg("\n---------- ELF64 Base Function TEST ----------");
     Elf64 elf64;
     bool isElf = IsELF("./out");
     assert(isElf);
@@ -40,12 +40,12 @@ void elf64Tester() {
     // Test reading shstrtab contain
     ret = Getshstrtab(&elf64);
     assert(ret);
-    for (uint16_t i = 0; i < elf64.shstrtabhdr.sh_size; i++) {
-        if (elf64.shstrtab[i] == 0)
-            printf(" ");
-        else
-            printf("%c", elf64.shstrtab[i]);
-    }
+//    for (uint16_t i = 0; i < elf64.shstrtabhdr.sh_size; i++) {
+//        if (elf64.shstrtab[i] == 0)
+//            printf(" ");
+//        else
+//            printf("%c", elf64.shstrtab[i]);
+//    }
 
     // Test get elf file size
     log_msg("\n----------> Rewrite ELF");
@@ -53,7 +53,16 @@ void elf64Tester() {
     assert(size == elf64.size);
     log_msg("ELF file size is %p", elf64.size);
 
-    Destract(&elf64);
+//    ret = AddSectionHeader(&elf64);
+    assert(ret);
+//    ret = AddSectionName(&elf64);
+    assert(ret);
 
-    // Test reading
+    HashText(&elf64);
+    printf("\n----------> Hash of .text:\n");
+    for (int i = 0; i < 20; i++)
+        printf("%p ", elf64.digest[i]);
+
+    Destract(&elf64);
+    log_msg("ELF64 base function test pass!");
 }
