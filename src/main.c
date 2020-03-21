@@ -4,6 +4,8 @@
 int main() {
 //    signTester();
 //    elf64BaseTester();
-    sign64Tester();
+//    sign64Tester();
+//    elf32BaseTester();
+    sign32Tester();
     return 0;
 }

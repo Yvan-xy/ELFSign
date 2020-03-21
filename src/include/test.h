@@ -10,4 +10,8 @@ void signTester();
 void elf64BaseTester();
 
 void sign64Tester();
+
+void elf32BaseTester();
+
+void sign32Tester();
 #endif //ELFSIGN_TEST_H

@@ -22,30 +22,30 @@ typedef struct {
 } Elf64;
 
 
-bool IsELF(const char *file);
+bool IsELF64(const char *file);
 
-void SetElfPath(Elf64 *elf64, const char *path);
+void SetElf64Path(Elf64 *elf64, const char *path);
 
-bool GetEhdr(Elf64 *elf64);
+bool GetEhdr64(Elf64 *elf64);
 
-bool Getshstrtabhdr(Elf64 *elf64);
+bool Getshstrtabhdr64(Elf64 *elf64);
 
-bool Getshstrtab(Elf64 *elf64);
+bool Getshstrtab64(Elf64 *elf64);
 
-int GetFileSize(Elf64 *elf64);
+int GetFileSize64(Elf64 *elf64);
 
-bool AddSectionHeader(Elf64 *elf64);
+bool AddSectionHeader64(Elf64 *elf64);
 
-bool CreateSignSection(Elf64 *elf64, Elf64_Shdr *signSection);
+bool CreateSignSection64(Elf64 *elf64, Elf64_Shdr *signSection);
 
-bool AddSectionName(Elf64 *elf64);
+bool AddSectionName64(Elf64 *elf64);
 
-bool UpdateShstrtabSize(Elf64 *elf64);
+bool UpdateShstrtabSize64(Elf64 *elf64);
 
-bool UpdateShnum(Elf64 *elf64);
+bool UpdateShnum64(Elf64 *elf64);
 
-bool HashText(Elf64 *elf64);
+bool HashText64(Elf64 *elf64);
 
-void Destract(Elf64 *elf64);
+void Destract64(Elf64 *elf64);
 
 #endif //ELFSIGN_ELF_64_H

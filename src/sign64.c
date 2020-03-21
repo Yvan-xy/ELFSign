@@ -8,20 +8,20 @@
 
 Elf64 *InitELF64(const char *path) {
     Elf64 *elf64 = (Elf64 *) malloc(sizeof(Elf64));
-    SetElfPath(elf64, path);
-    bool ret = GetEhdr(elf64);
+    SetElf64Path(elf64, path);
+    bool ret = GetEhdr64(elf64);
     if (!ret)
         return NULL;
 
-    ret = Getshstrtabhdr(elf64);
+    ret = Getshstrtabhdr64(elf64);
     if (!ret)
         return NULL;
 
-    ret = Getshstrtab(elf64);
+    ret = Getshstrtab64(elf64);
     if (!ret)
         return NULL;
 
-    ret = GetFileSize(elf64);
+    ret = GetFileSize64(elf64);
     if (!ret)
         return NULL;
 
@@ -32,15 +32,15 @@ bool SignToELF64(Elf64 *elf64, RSA *pri) {
     unsigned char sign[256];
 
 
-    int ret = HashText(elf64);
+    int ret = HashText64(elf64);
     if (!ret)
         return false;
 
-    ret = AddSectionHeader(elf64);
+    ret = AddSectionHeader64(elf64);
     if (!ret)
         return false;
 
-    ret = AddSectionName(elf64);
+    ret = AddSectionName64(elf64);
     if (!ret)
         return false;
 
