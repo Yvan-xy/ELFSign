@@ -89,12 +89,12 @@ char *GetPrivateKeyPath() {
 }
 
 /*读取公匙*/
-RSA *ReadPublicKey(char *path) {
+RSA *ReadPublicKey(const char *path) {
     BIO *pub = NULL;
 
     RSA *pubRsa = NULL;
 
-    log_msg("PublicKeyPath[%s]", path);
+    log_msg("PublicKeyPath [%s]", path);
 
     pub = BIO_new(BIO_s_file());
 
@@ -104,7 +104,6 @@ RSA *ReadPublicKey(char *path) {
     if (pubRsa == NULL) {
         err_quit("Read error");
     }
-    log_msg("Read public key success");
 
     BIO_free_all(pub);
 
@@ -112,11 +111,11 @@ RSA *ReadPublicKey(char *path) {
 }
 
 /*读取私钥*/
-RSA *ReadPrivateKey(char *path) {
+RSA *ReadPrivateKey(const char *path) {
     RSA *priRsa = NULL;
     BIO *pri = NULL;
 
-    log_msg("PrivateKeyPath[%s]", path);
+    log_msg("PrivateKeyPath [%s]", path);
 
     pri = BIO_new(BIO_s_file());
 
@@ -126,7 +125,6 @@ RSA *ReadPrivateKey(char *path) {
     if (priRsa == NULL) {
         err_quit("Read private key error");
     }
-    log_msg("Read private key success");
 
     BIO_free_all(pri);
 
@@ -142,7 +140,7 @@ int GetSign(unsigned char *hash, unsigned char *sign, RSA *pri) {
     return signLen;
 }
 
-int RSACheckSign(char *contain, unsigned char *sign, int signLen, RSA *pub) {
+int RSACheckSign(const char *contain, unsigned char *sign, int signLen, RSA *pub) {
     unsigned char digest[SHA_DIGEST_LENGTH];
     SHA_CTX ctx;
     SHA1_Init(&ctx);

@@ -16,4 +16,10 @@ bool ReadELF32Sign(Elf32 *elf32);
 
 bool CheckSignELF32(Elf32 *elf32, RSA *pub);
 
+bool Sign32(const char *priv, const char *elfPath);
+
+bool CheckSign32(const char *pub, const char *elfPath);
+
+bool exec32(const char *elf32);
+
 #endif //ELFSIGN_SIGN32_H

@@ -16,4 +16,10 @@ bool ReadELF64Sign(Elf64 *elf64);
 
 bool CheckSignELF64(Elf64 *elf64, RSA *pub);
 
+bool Sign64(const char *priv, const char *elfPath);
+
+bool CheckSign64(const char *pub, const char *elfPath);
+
+bool exec64(const char *elf64);
+
 #endif //ELFSIGN_SIGN64_H

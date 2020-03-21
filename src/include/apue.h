@@ -65,7 +65,9 @@ int tty_reset(int);
 void tty_atexit(void);
 
 #ifdef  ECHO    // only if <termios.h> has been included
-struct  termios     *tty_termios(void);
+
+struct termios *tty_termios(void);
+
 #endif
 
 void sleep_us(unsigned int);
@@ -97,7 +99,9 @@ int ptym_open(char *, int);
 int ptys_open(char *);
 
 #ifdef  TIOCGWINSZ
-pid_t   pty_fork(int *, char *, int, const struct termios *, const struct winsize *);
+
+pid_t pty_fork(int *, char *, int, const struct termios *, const struct winsize *);
+
 #endif
 
 int lock_reg(int, int, int, off_t, int, off_t);
@@ -146,6 +150,7 @@ void log_sys(const char *, ...);
 void TELL_WAIT(void);
 
 void TELL_PARENT(pid_t);
+
 void TELL_CHILD(pid_t);
 
 void WAIT_PARENT(void);

@@ -19,7 +19,6 @@ bool IsELF32(const char *file) {
         return false;
     }
     if (ident[0] == 0x7f && ident[1] == 'E' && ident[2] == 'L' && ident[3] == 'F') {
-        log_msg("Type is %p", ident[4]);
         if (ident[4] == 1)
             return true;
         else
@@ -129,7 +128,6 @@ bool AddSectionHeader32(Elf32 *elf32) {
     CreateSignSection32(elf32, &signSection);
     int ret = fwrite(&signSection, 1, sizeof(Elf32_Shdr), fd);
     fclose(fd);
-    log_msg("ret is %d", ret);
     if (ret != sizeof(Elf32_Shdr)) {
         err_msg("Write Sign Section Header Failded");
         return false;
@@ -199,7 +197,6 @@ bool UpdateShstrtabSize32(Elf32 *elf32) {
 
     // end + section_header + name - shstrtab_offset
     size = elf32->size + sizeof(Elf32_Shdr) + 6 - elf32->shstrtabhdr.sh_offset;
-    log_msg("Size of new size %d", size);
     int ret = fwrite(&size, 1, sizeof(size), fd);
     fclose(fd);
     if (ret != sizeof(size)) {
@@ -219,11 +216,9 @@ bool UpdateShnum32(Elf32 *elf32) {
     }
 
     offset = sizeof(Elf32_Ehdr) - sizeof(Elf32_Half) * 2;
-    log_msg("Offset number of sections is %d(%p)", offset, offset);
     fseek(fd, offset, SEEK_SET);
     int ret = fwrite(&newSize, 1, sizeof(newSize), fd);
     fclose(fd);
-    log_msg("ret is %d", ret);
     if (ret != sizeof(newSize)) {
         err_msg("Write new section number failed");
         return false;
@@ -254,7 +249,7 @@ bool HashText32(Elf32 *elf32) {
             return false;
         }
         strcpy(name, elf32->shstrtab + tmp.sh_name);
-        log_msg("Section name is %s", name);
+//        log_msg("Section name is %s", name);
     } while (strcmp(name, ".text"));
     if (strcmp(name, ".text")) {
         err_msg("Not found .text section");

@@ -127,7 +127,6 @@ bool AddSectionHeader64(Elf64 *elf64) {
     CreateSignSection64(elf64, &signSection);
     int ret = fwrite(&signSection, 1, sizeof(Elf64_Shdr), fd);
     fclose(fd);
-    log_msg("ret is %d", ret);
     if (ret != sizeof(Elf64_Shdr)) {
         err_msg("Write Sign Section Header Failded");
         return false;
@@ -197,7 +196,6 @@ bool UpdateShstrtabSize64(Elf64 *elf64) {
 
     // end + section_header + name - shstrtab_offset
     size = elf64->size + sizeof(Elf64_Shdr) + 6 - elf64->shstrtabhdr.sh_offset;
-    log_msg("Size of new size %d", size);
     int ret = fwrite(&size, 1, sizeof(size), fd);
     fclose(fd);
     if (ret != sizeof(size)) {
@@ -217,11 +215,10 @@ bool UpdateShnum64(Elf64 *elf64) {
     }
 
     offset = sizeof(Elf64_Ehdr) - sizeof(Elf64_Half) * 2;
-    log_msg("Offset number of sections is %d(%p)", offset, offset);
+//    log_msg("Offset number of sections is %d(%p)", offset, offset);
     fseek(fd, offset, SEEK_SET);
     int ret = fwrite(&newSize, 1, sizeof(newSize), fd);
     fclose(fd);
-    log_msg("ret is %d", ret);
     if (ret != sizeof(newSize)) {
         err_msg("Write new section number failed");
         return false;
@@ -252,7 +249,6 @@ bool HashText64(Elf64 *elf64) {
             return false;
         }
         strcpy(name, elf64->shstrtab + tmp.sh_name);
-        log_msg("Section name is %s", name);
     } while (strcmp(name, ".text"));
     if (strcmp(name, ".text")) {
         err_msg("Not found .text section");

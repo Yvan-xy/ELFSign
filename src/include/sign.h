@@ -31,13 +31,13 @@ char *GetPublicKeyPath();
 
 char *GetPrivateKeyPath();
 
-RSA *ReadPublicKey(char *path);
+RSA *ReadPublicKey(const char *path);
 
-RSA *ReadPrivateKey(char *path);
+RSA *ReadPrivateKey(const char *path);
 
 int GetSign(unsigned char *hash, unsigned char *sign, RSA *pri);
 
-int RSACheckSign(char *contain, unsigned char *sign, int signLen, RSA *pub);
+int RSACheckSign(const char *contain, unsigned char *sign, int signLen, RSA *pub);
 
 char *Base64Encode(const unsigned char *input, int length);
 
