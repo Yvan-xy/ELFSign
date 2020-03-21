@@ -9,9 +9,13 @@ int main(int argc, char *argv[]) {
     Argh argh;
     int opt = 0, longIndex;
 
-    opt = getopt_long(argc, argv, optString, longOptions, &longIndex);
+    if (argc == 1) {
+        ShowTips((const char **) argv);
+        return 0;
+    }
 
-    while (opt != -1) {
+    do {
+        opt = getopt_long(argc, argv, optString, longOptions, &longIndex);
         switch (opt) {
             case 'g':
                 GenerateRSAKey();
@@ -34,11 +38,16 @@ int main(int argc, char *argv[]) {
                 else if (argh.checkSign == 1)
                     argh.pubpath = optarg;
                 break;
+            case 'h':
+                ShowTips((const char **) argv);
+                return 0;
+            case '?':
+                printf("Use -h|--help for more help\n");
+                return 0;
             default:
                 break;
         }
-        opt = getopt_long(argc, argv, optString, longOptions, &longIndex);
-    }
+    } while (opt != -1);
 
     if (argh.sign == 1) {
         int type = IsELF32(argh.elf);

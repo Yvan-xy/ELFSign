@@ -24,7 +24,7 @@ configure_file (
 add_subdirectory (${PROJECT_SOURCE_DIR}/src)
 aux_source_directory (${PROJECT_SOURCE_DIR}/src DIR_SRCS)
 
-add_executable (out ${DIR_SRCS})
+add_executable (ELFSign ${DIR_SRCS})
 message ("src codes -> " ${DIR_SRCS})
 
-target_link_libraries (out source)
+target_link_libraries (ELFSign source)
