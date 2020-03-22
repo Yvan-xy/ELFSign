@@ -2,8 +2,9 @@
 // Created by root on 2020/3/21.
 //
 
-#include <elf_32.h>
 #include <sign.h>
+#include <argh.h>
+#include <elf_32.h>
 #include <sign32.h>
 #include <stdbool.h>
 
@@ -115,17 +116,78 @@ bool CheckSign32(const char *pub, const char *elfPath) {
 }
 
 bool exec32(const char *elf32) {
-    char *name;
-    if (elf32[0] == '.' || elf32[1] == '/')
-        system(elf32);
-    else if (elf32[0] == '/')
-        system(elf32);
-    else {
-        name = (char *) malloc(2 + strlen(elf32));
-        name[0] = '.';
-        name[1] = '/';
-        strcpy(name + 2, elf32);
-        system(name);
-        free(name);
+    char *cmd;
+    extern Argh argh;
+    if (argh.hasArgs == 1) {
+
+        int argsLen = strlen(argh.args);
+        log_msg("argh.args is %s", argh.args);
+        if ((elf32[0] == '.' && elf32[1] == '/') || elf32[0] == '/') {
+            cmd = (char *) malloc(strlen(elf32) + argsLen + 1);
+            strcpy(cmd, elf32);
+            cmd[strlen(elf32)] = ' ';
+            strcpy(cmd + strlen(elf32) + 1, argh.args);
+        } else {
+            cmd = (char *) malloc(2 + strlen(elf32) + 1 + strlen(argh.args));
+            cmd[0] = '.';
+            cmd[1] = '/';
+            strcpy(cmd + 2, elf32);
+            cmd[2 + strlen(elf32)] = ' ';
+            strcpy(cmd + 3 + strlen(elf32), argh.args);
+        }
+        system(cmd);
+        free(cmd);
+    } else {
+        if ((elf32[0] == '.' && elf32[1] == '/') || elf32[0] == '/') {
+            cmd = (char *) malloc(strlen(elf32));
+            strcpy(cmd, elf32);
+        } else {
+            cmd = (char *) malloc(2 + strlen(elf32));
+            cmd[0] = '.';
+            cmd[1] = '/';
+            strcpy(cmd + 2, elf32);
+        }
+        system(cmd);
+        free(cmd);
     }
+    return true;
+}
+
+bool X509CheckSign32(const char *x509Path, const char *elfPath) {
+    printf("\033[34m---------- Verify ELF's Sign with X509----------\033[0m\n");
+
+    RSA *public;
+    X509 *x509;
+    Elf32 *elf32;
+    EVP_PKEY *pubKey;
+
+    elf32 = InitELF32(elfPath);
+
+    x509 = ReadX509File(x509Path);
+    pubKey = X509_get_pubkey(x509);
+
+    if (pubKey == NULL) {
+        err_msg("Get public key failed\n");
+        return false;
+    }
+
+    public = EVP_PKEY_get1_RSA(pubKey);
+    EVP_PKEY_free(pubKey);
+    if (public == NULL) {
+        err_msg("Get public key failed\n");
+        return false;
+    }
+
+    ReadELF32Sign(elf32);
+    HashText32(elf32);
+    int ret = CheckSignELF32(elf32, public);
+    if (ret == false) {
+        err_msg("ELF32 %s verify failed!\n", elfPath);
+        return ret;
+    }
+    log_msg("ELF32 %s verify success!\n", elfPath);
+    exec32(elfPath);
+    Destract32(elf32);
+    X509_free(x509);
+    return ret;
 }

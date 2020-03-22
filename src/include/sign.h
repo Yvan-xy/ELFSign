@@ -9,6 +9,9 @@
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
 #include <openssl/sha.h>
+#include <openssl/evp.h>
+#include <openssl/x509.h>
+#include <openssl/x509_vfy.h>
 #include <string.h>
 #include <math.h>
 #include <stdbool.h>
@@ -42,5 +45,11 @@ int RSACheckSign(const char *contain, unsigned char *sign, int signLen, RSA *pub
 char *Base64Encode(const unsigned char *input, int length);
 
 char *Base64Decode(const char *input, int length);
+
+void GenerateX509();
+
+X509 *ReadX509File(const char *path);
+
+
 
 #endif

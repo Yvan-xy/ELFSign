@@ -8,5 +8,6 @@
 #define KEY_LENGTH @KEY_LENGTH@     // 密钥长度
 #define PUB_KEY_FILE @PUB_KEY_FILE@ // 公钥路径
 #define PRI_KEY_FILE @PRI_KEY_FILE@ // 私钥路径
+#define CERTIFICATE_FILE @CERTIFICATE_FILE@
 
 #endif //ELFSIGN_CONFIG_H

@@ -6,7 +6,7 @@
 
 int main(int argc, char *argv[]) {
 //    sign32Tester();
-    Argh argh;
+    extern Argh argh;
     int opt = 0, longIndex;
 
     if (argc == 1) {
@@ -19,7 +19,11 @@ int main(int argc, char *argv[]) {
         switch (opt) {
             case 'g':
                 GenerateRSAKey();
-                log_msg("Generate key success!\n");
+                log_msg("Generate key success!");
+                exit(0);
+            case 'x':
+                GenerateX509();
+                log_msg("Generate X509 success!");
                 exit(0);
             case 'e':
                 argh.elf = optarg;
@@ -27,16 +31,28 @@ int main(int argc, char *argv[]) {
             case 's':
                 argh.sign = 1;
                 argh.pubpath = 0;
+                argh.checkSignX509 = 0;
                 break;
             case 'c':
                 argh.sign = 0;
                 argh.checkSign = 1;
+                argh.checkSignX509 = 0;
+                break;
+            case 'X':
+                argh.sign = 0;
+                argh.checkSign = 0;
+                argh.checkSignX509 = 1;
                 break;
             case 'p':
-                if (argh.sign == 1)
+                if (argh.sign)
                     argh.pripath = optarg;
-                else if (argh.checkSign == 1)
+                else if (argh.checkSign || argh.checkSignX509)
                     argh.pubpath = optarg;
+                break;
+            case 'a':
+                argh.args = optarg;
+                argh.hasArgs = 1;
+                ParseArgs();
                 break;
             case 'h':
                 ShowTips((const char **) argv);
@@ -70,6 +86,19 @@ int main(int argc, char *argv[]) {
             type = IsELF64(argh.elf);
             if (type)
                 CheckSign64(argh.pubpath, argh.elf);
+            else {
+                log_msg("%s is not ELF file!", argh.elf);
+                return 0;
+            }
+        }
+    } else if (argh.checkSignX509 == 1) {
+        int type = IsELF32(argh.elf);
+        if (type)
+            X509CheckSign32(argh.pubpath, argh.elf);
+        else {
+            type = IsELF64(argh.elf);
+            if (type)
+                X509CheckSign64(argh.pubpath, argh.elf);
             else {
                 log_msg("%s is not ELF file!", argh.elf);
                 return 0;

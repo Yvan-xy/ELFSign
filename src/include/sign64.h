@@ -5,8 +5,8 @@
 #ifndef ELFSIGN_SIGN64_H
 #define ELFSIGN_SIGN64_H
 
-#include <elf_64.h>
 #include <sign.h>
+#include <elf_64.h>
 
 Elf64 *InitELF64(const char *path);
 
@@ -21,5 +21,7 @@ bool Sign64(const char *priv, const char *elfPath);
 bool CheckSign64(const char *pub, const char *elfPath);
 
 bool exec64(const char *elf64);
+
+bool X509CheckSign64(const char *x509Path, const char *elfPath);
 
 #endif //ELFSIGN_SIGN64_H

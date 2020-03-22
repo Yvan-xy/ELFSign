@@ -2,8 +2,10 @@
 // Created by root on 2020/3/16.
 //
 
-#include <elf_64.h>
+#include <apue.h>
 #include <sign.h>
+#include <argh.h>
+#include <elf_64.h>
 #include <sign64.h>
 #include <stdbool.h>
 
@@ -105,27 +107,87 @@ bool CheckSign64(const char *pub, const char *elfPath) {
     HashText64(elf64);
     int ret = CheckSignELF64(elf64, public);
     if (ret == false) {
-        err_msg("ELF32 %s verify failed!\n", elfPath);
+        err_msg("ELF64 %s verify failed!\n", elfPath);
         return ret;
     }
-    log_msg("ELF32 %s verify success!\n", elfPath);
+    log_msg("ELF64 %s verify success!\n", elfPath);
     exec64(elfPath);
     Destract64(elf64);
     return ret;
 }
 
 bool exec64(const char *elf64) {
-    char *name;
-    if (elf64[0] == '.' || elf64[1] == '/')
-        system(elf64);
-    else if (elf64[0] == '/')
-        system(elf64);
-    else {
-        name = (char *) malloc(2 + strlen(elf64));
-        name[0] = '.';
-        name[1] = '/';
-        strcpy(name + 2, elf64);
-        system(name);
-        free(name);
+    char *cmd;
+    extern Argh argh;
+    if (argh.hasArgs == 1) {
+        int argsLen = strlen(argh.args);
+        log_msg("argh.args is %s", argh.args);
+        if ((elf64[0] == '.' && elf64[1] == '/') || elf64[0] == '/') {
+            cmd = (char *) malloc(strlen(elf64) + argsLen + 1);
+            strcpy(cmd, elf64);
+            cmd[strlen(elf64)] = ' ';
+            strcpy(cmd + strlen(elf64) + 1, argh.args);
+        } else {
+            cmd = (char *) malloc(2 + strlen(elf64) + 1 + strlen(argh.args));
+            cmd[0] = '.';
+            cmd[1] = '/';
+            strcpy(cmd + 2, elf64);
+            cmd[2 + strlen(elf64)] = ' ';
+            strcpy(cmd + 3 + strlen(elf64), argh.args);
+        }
+        system(cmd);
+        free(cmd);
+    } else {
+        if ((elf64[0] == '.' && elf64[1] == '/') || elf64[0] == '/') {
+            cmd = (char *) malloc(strlen(elf64));
+            strcpy(cmd, elf64);
+        } else {
+            cmd = (char *) malloc(2 + strlen(elf64));
+            cmd[0] = '.';
+            cmd[1] = '/';
+            strcpy(cmd + 2, elf64);
+        }
+        system(cmd);
+        free(cmd);
     }
+    return true;
+}
+
+bool X509CheckSign64(const char *x509Path, const char *elfPath) {
+    printf("\033[34m---------- Verify ELF's Sign with X509----------\033[0m\n");
+
+    RSA *public;
+    X509 *x509;
+    Elf64 *elf64;
+    EVP_PKEY *pubKey;
+
+    elf64 = InitELF64(elfPath);
+
+    x509 = ReadX509File(x509Path);
+    pubKey = X509_get_pubkey(x509);
+
+    if (pubKey == NULL) {
+        err_msg("Get public key failed\n");
+        return false;
+    }
+
+    public = EVP_PKEY_get1_RSA(pubKey);
+    EVP_PKEY_free(pubKey);
+    if (public == NULL) {
+        err_msg("Get public key failed\n");
+        return false;
+    }
+
+    ReadELF64Sign(elf64);
+    HashText64(elf64);
+    int ret = CheckSignELF64(elf64, public);
+    if (ret == false) {
+        err_msg("ELF64 %s verify failed!\n", elfPath);
+        return ret;
+    }
+    log_msg("ELF64 %s verify success!\n", elfPath);
+    exec64(elfPath);
+    Destract64(elf64);
+    X509_free(x509);
+    return ret;
 }

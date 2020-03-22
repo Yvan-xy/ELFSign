@@ -6,6 +6,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <sys/termios.h>
+#include <sys/wait.h>
 
 #ifndef TIOCGWINSZ
 
