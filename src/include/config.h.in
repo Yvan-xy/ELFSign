@@ -9,5 +9,6 @@
 #define PUB_KEY_FILE @PUB_KEY_FILE@ // 公钥路径
 #define PRI_KEY_FILE @PRI_KEY_FILE@ // 私钥路径
 #define CERTIFICATE_FILE @CERTIFICATE_FILE@
+#define LOG_MODE @LOG_MODE@
 
 #endif //ELFSIGN_CONFIG_H

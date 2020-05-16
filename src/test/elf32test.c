@@ -28,6 +28,7 @@ void elf32BaseTester() {
     log_msg("Size of Section Header Entry %d(%p)", elf32.ehdr.e_shentsize, elf32.ehdr.e_shentsize);
     log_msg("Section header string table index %d(%p)", elf32.ehdr.e_shstrndx, elf32.ehdr.e_shstrndx);
 
+
     // Test reading Section name string table section header
     ret = Getshstrtabhdr32(&elf32);
     assert(ret);
@@ -39,12 +40,17 @@ void elf32BaseTester() {
     // Test reading shstrtab contain
     ret = Getshstrtab32(&elf32);
     assert(ret);
-//    for (uint16_t i = 0; i < elf64.shstrtabhdr.sh_size; i++) {
-//        if (elf64.shstrtab[i] == 0)
+//    for (uint16_t i = 0; i < elf32.shstrtabhdr.sh_size; i++) {
+//        if (elf32.shstrtab[i] == 0)
 //            printf(" ");
 //        else
 //            printf("%c", elf64.shstrtab[i]);
 //    }
+
+    // Test reading Program Header Table
+    log_msg("\n----------> Program Header Table");
+    log_msg("Program Entry Size is %d", elf32.ehdr.e_phentsize);
+    log_msg("Program Entry Number is %d", elf32.ehdr.e_phnum);
 
     // Test get elf file size
     log_msg("\n----------> Rewrite ELF");
@@ -52,10 +58,10 @@ void elf32BaseTester() {
     assert(size == elf32.size);
     log_msg("ELF file size is %p", elf32.size);
 
-    ret = AddSectionHeader32(&elf32);
-    assert(ret);
-    ret = AddSectionName32(&elf32);
-    assert(ret);
+//    ret = AddSectionHeader32(&elf32);
+//    assert(ret);
+//    ret = AddSectionName32(&elf32);
+//    assert(ret);
 
     HashText32(&elf32);
     printf("\n----------> Hash of .text:\n");

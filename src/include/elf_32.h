@@ -34,6 +34,8 @@ bool Getshstrtab32(Elf32 *elf32);
 
 int GetFileSize32(Elf32 *elf32);
 
+unsigned char *GetLoadSegment32(Elf32 *elf32, Elf32_Phdr *phdr);
+
 bool AddSectionHeader32(Elf32 *elf32);
 
 bool CreateSignSection32(Elf32 *elf32, Elf32_Shdr *signSection);
