@@ -233,7 +233,6 @@ bool HashText32(Elf32 *elf32) {
     Elf32_Phdr tmp;
     char name[20];
     unsigned char *content = NULL;
-    unsigned char buf[1];
 
     SHA_CTX ctx;
     SHA1_Init(&ctx);
@@ -261,7 +260,7 @@ bool HashText32(Elf32 *elf32) {
 #endif
 
         /* Judge if Load Segment */
-        if (tmp.p_type != PT_LOAD)
+        if (tmp.p_type != PT_LOAD || tmp.p_offset == 0)
             continue;
 
         content = GetLoadSegment32(elf32, &tmp);
@@ -279,35 +278,8 @@ bool HashText32(Elf32 *elf32) {
             free(content);
 
         content = NULL;
+    }
 
-    }
-    /*
-    fseek(fd, sectionHeaderTable, SEEK_SET);
-    do {
-        int ret = fread(&tmp, 1, sizeof(Elf32_Shdr), fd);
-        if (ret != sizeof(Elf32_Shdr)) {
-            err_msg("Read section header failed");
-            return false;
-        }
-        strcpy(name, elf32->shstrtab + tmp.sh_name);
-//        log_msg("Section name is %s", name);
-    } while (strcmp(name, ".text"));
-    if (strcmp(name, ".text")) {
-        err_msg("Not found .text section");
-        return false;
-    }
-    textOffset = tmp.sh_offset;
-    fseek(fd, textOffset, SEEK_SET);
-
-    for (int i = 0; i < tmp.sh_size; i++) {
-        int ret = fread(buf, 1, 1, fd);
-        if (ret != 1) {
-            err_msg("Read .text section failed");
-            return false;
-        }
-        SHA1_Update(&ctx, buf, 1);
-    }
-     */
     fclose(fd);
     SHA1_Final(elf32->digest, &ctx);
     return true;
@@ -320,8 +292,6 @@ unsigned char *GetLoadSegment32(Elf32 *elf32, Elf32_Phdr *phdr) {
     }
     Elf32_Off p_offset = phdr->p_offset;
     Elf32_Word p_filesz = phdr->p_filesz;
-
-    log_msg("Reading offset is %p, Size is %p", p_offset, p_filesz);
 
     FILE *fd = fopen(elf32->path, "rb");
     if (!fd) {

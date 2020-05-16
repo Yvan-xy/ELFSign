@@ -35,6 +35,10 @@ bool SignToELF32(Elf32 *elf32, RSA *pri) {
 
 
     int ret = HashText32(elf32);
+    printf("\n----------> Hash of .text:\n");
+    for (int i = 0; i < 20; i++)
+        printf("%p ", elf32->digest[i]);
+
     if (!ret)
         return false;
 
@@ -104,6 +108,9 @@ bool CheckSign32(const char *pub, const char *elfPath) {
 
     ReadELF32Sign(elf32);
     HashText32(elf32);
+    printf("\n----------> Hash of Load Segments:\n");
+    for (int i = 0; i < 20; i++)
+        printf("%p ", elf32->digest[i]);
     int ret = CheckSignELF32(elf32, public);
     if (ret == false) {
         err_msg("ELF32 %s verify failed!\n", elfPath);

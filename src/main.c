@@ -7,8 +7,8 @@
 int main(int argc, char *argv[]) {
 //    sign32Tester();
 //    elf64BaseTester();
-    elf32BaseTester();
-    exit(0);
+//    elf32BaseTester();
+//    exit(0);
 
     int opt = 0, longIndex;
 

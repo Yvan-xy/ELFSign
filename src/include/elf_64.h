@@ -34,6 +34,8 @@ bool Getshstrtab64(Elf64 *elf64);
 
 int GetFileSize64(Elf64 *elf64);
 
+unsigned char *GetLoadSegment64(Elf64 *elf64, Elf64_Phdr *phdr);
+
 bool AddSectionHeader64(Elf64 *elf64);
 
 bool CreateSignSection64(Elf64 *elf64, Elf64_Shdr *signSection);
