@@ -42,19 +42,19 @@ static const struct option longOptions[] = {
 
 static void ShowTips(const char *argv[]) {
     printf(USAGE_FORMAT, argv[0]);
-    printf("Options:\n");
-    printf("\t-c, --check Check ELF file and execute it\n");
-    printf("\t-X, --check-X509 Check ELF file with X509 and execute it\n");
-    printf("\t-s, --sign Sign a ELF file\n");
-    printf("\t-a, --argument Set arguments of ELF file to execute\n");
-    printf("\t-g, --generate Generate public and private key pair\n");
-    printf("\t-x, --create-X509 Generate X509 certificate\n");
-    printf("\t-p, --path Set the path of public/private key\n");
-    printf("\t-e, --elf Set the path of ELF file\n");
-    printf("\nExample:\n");
-    printf("\t ./ELFSign --sign -p ./prikey.pem -e hello.out\n");
-    printf("\t ./ELFSign -c -p ./pubkey.pem -e hello.out\n");
-    printf("\t ./ELFSign -X -p ./ELFSign.pem -e /usr/bin/cat -a a.txt\n");
+    printf("Options:\n"
+        "\t-c, --check Check ELF file and execute it\n"
+        "\t-X, --check-X509 Check ELF file with X509 and execute it\n"
+        "\t-s, --sign Sign a ELF file\n"
+        "\t-a, --argument Set arguments of ELF file to execute\n"
+        "\t-g, --generate Generate public and private key pair\n"
+        "\t-x, --create-X509 Generate X509 certificate\n"
+        "\t-p, --path Set the path of public/private key\n"
+        "\t-e, --elf Set the path of ELF file\n"
+        "\nExample:\n"
+        "\t ./ELFSign --sign -p ./prikey.pem -e hello.out\n"
+        "\t ./ELFSign -c -p ./pubkey.pem -e hello.out\n"
+        "\t ./ELFSign -X -p ./ELFSign.pem -e /usr/bin/cat -a a.txt\n");
 }
 
 static void ParseArgs() {
