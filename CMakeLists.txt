@@ -3,7 +3,7 @@ project(ELFsign)
 
 set(CMAKE_CXX_STANDARD 14)
 # Set include dir and src dir
-set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/src/include)
+set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 message (STATUS "source -> ${PROJECT_SOURCE_DIR}/src")
 message (STATUS "include -> ${PROJECT_INCLUDE_DIR}")
 include_directories(${PROJECT_INCLUDE_DIR})
