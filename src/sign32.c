@@ -86,6 +86,11 @@ bool Sign32(const char *priv, const char *elfPath) {
     Elf32 *elf32;
     elf32 = InitELF32(elfPath);
     RSA *pri = ReadPrivateKey(priv);
+
+    /* Multi-Platform */
+    // int type = GetMachineType(elf32);
+    // ARM
+
     int ret = SignToELF32(elf32, pri);
     if (ret == false) {
         err_msg("Sign ELF32 %s failed", elfPath);

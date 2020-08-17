@@ -5,6 +5,10 @@
 #ifndef ELFSIGN_ARGH_H
 #define ELFSIGN_ARGH_H
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <stddef.h>
 #include <getopt.h>
 
 #define USAGE_FORMAT "USAGE: %s [options] file...\n"
@@ -77,5 +81,9 @@ static void ParseArgs() {
     }
     argh.argsArr[i] = NULL;
 }
+
+enum M_TYPE {
+    X86, X86_64, ARM_32, ARM_64, MIPS_32, MIPS_64, ERROR
+};
 
 #endif //ELFSIGN_ARGH_H

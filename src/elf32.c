@@ -2,7 +2,7 @@
 // Created by root on 2020/3/21.
 //
 
-
+#include <argh.h>
 #include <elf_32.h>
 #include <config.h>
 
@@ -27,6 +27,17 @@ bool IsELF32(const char *file) {
     } else {
         return false;
     }
+}
+
+int GetMachineType(Elf32 *elf32) {
+    Elf32_Half e_machine;
+    e_machine = elf32->ehdr.e_machine;
+    
+    if (e_machine == 40) {  // ARM  
+        log_msg("ELF machine type is ARM");
+        return ARM_32;
+    } 
+    return ERROR;
 }
 
 void SetElf32Path(Elf32 *elf32, const char *path) {
@@ -290,7 +301,7 @@ unsigned char *GetLoadSegment32(Elf32 *elf32, Elf32_Phdr *phdr) {
         err_msg("phdr not exist");
         return false;
     }
-    Elf32_Off p_offset = phdr->p_offset;
+    Elf32_Off  p_offset = phdr->p_offset;
     Elf32_Word p_filesz = phdr->p_filesz;
 
     FILE *fd = fopen(elf32->path, "rb");

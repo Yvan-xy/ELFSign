@@ -1,7 +1,7 @@
 cmake_minimum_required(VERSION 3.15)
 project(ELFsign)
 
-set(CMAKE_CXX_STANDARD 14)
+#set(CMAKE_CXX_STANDARD 14)
 # Set include dir and src dir
 set (PROJECT_INCLUDE_DIR ${PROJECT_SOURCE_DIR}/include)
 message (STATUS "source -> ${PROJECT_SOURCE_DIR}/src")
@@ -22,6 +22,7 @@ configure_file (
         "${PROJECT_INCLUDE_DIR}/config.h.in"
         "${PROJECT_INCLUDE_DIR}/config.h"
 )
+
 
 add_subdirectory (${PROJECT_SOURCE_DIR}/src)
 aux_source_directory (${PROJECT_SOURCE_DIR}/src DIR_SRCS)

@@ -5,9 +5,9 @@
 #ifndef ELFSIGN_ELF_32_H
 #define ELFSIGN_ELF_32_H
 
-#include<elf.h>
-#include <stdio.h>
+#include <elf.h>
 #include <apue.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <openssl/sha.h>
 
@@ -49,5 +49,9 @@ bool UpdateShnum32(Elf32 *elf32);
 bool HashText32(Elf32 *elf32);
 
 void Destract32(Elf32 *elf32);
+
+int GetMachineType(Elf32 *elf32);
+/* -------- ARM -------- */
+
 
 #endif //ELFSIGN_ELF_32_H

@@ -1,6 +1,6 @@
 #include <sign.h>
-#include <test.h>
 #include <argh.h>
+#include <test.h>
 #include <sign32.h>
 #include <sign64.h>
 
@@ -70,8 +70,9 @@ int main(int argc, char *argv[]) {
 
     if (argh.sign == 1) {
         int type = IsELF32(argh.elf);
-        if (type)
+        if (type) {
             Sign32(argh.pripath, argh.elf);
+        }
         else {
             type = IsELF64(argh.elf);
             if (type)
@@ -83,12 +84,14 @@ int main(int argc, char *argv[]) {
         }
     } else if (argh.checkSign == 1) {
         int type = IsELF32(argh.elf);
-        if (type)
+        if (type) {
             CheckSign32(argh.pubpath, argh.elf);
+        }
         else {
             type = IsELF64(argh.elf);
-            if (type)
+            if (type) {
                 CheckSign64(argh.pubpath, argh.elf);
+            }
             else {
                 log_msg("%s is not ELF file!", argh.elf);
                 return 0;
@@ -100,8 +103,9 @@ int main(int argc, char *argv[]) {
             X509CheckSign32(argh.pubpath, argh.elf);
         else {
             type = IsELF64(argh.elf);
-            if (type)
+            if (type) {
                 X509CheckSign64(argh.pubpath, argh.elf);
+            }
             else {
                 log_msg("%s is not ELF file!", argh.elf);
                 return 0;

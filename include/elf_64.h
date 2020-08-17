@@ -6,8 +6,8 @@
 #define ELFSIGN_ELF_64_H
 
 #include <elf.h>
-#include <stdio.h>
 #include <apue.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include <openssl/sha.h>
 
