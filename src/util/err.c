@@ -89,7 +89,12 @@ err_quit(const char *fmt, ...) {
 static void
 err_doit(int errnoflag, int error, const char *fmt, va_list ap) {
     char buf[MAXLINE];
-    vsnprintf(buf, MAXLINE, fmt, ap);
+
+    memset(buf, 0, MAXLINE);
+    const char *errinfo = "\033[31m[+]Error\033[0m:\0";
+    strcat(buf, errinfo);
+    
+    vsnprintf(buf+strlen(buf), MAXLINE, fmt, ap);
     if (errnoflag)
         snprintf(buf+strlen(buf), MAXLINE-strlen(buf), ": %s",
                  strerror(error));
